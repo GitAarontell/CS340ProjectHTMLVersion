@@ -7,13 +7,75 @@
 
   <body>
     
-    <H1>Drivers</H1>
+    <div class="nav">
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="drivers.html">Drivers</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="trucks.html">Trucks</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="customers.html">Customers</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="facilities.html">Facilities</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="deliveries.html">Deliveries</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="orders.html">Orders</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+    </div>
+
+    <h1>Drivers</h1>
 
     <div class="driversContainer">
       <table border="1" width="1000" height="100" class="tableBody">
         <thead>
           <tr align="center" class="headers">
-            <th width="100" height="35"></th>
+            <th></th>
             <th>Name</th>
             <th>Email</th>
             <th>Late Deliveries</th>
@@ -21,21 +83,21 @@
           </tr>
         </thead>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>Jay Phillips</td>
           <td>jay@gmail.com</td>
           <td>3</td>
           <td>14</td>
         </tr>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>Arnold Reinhold</td>
           <td>arnold@gmail.com</td>
           <td>5</td>
           <td>2</td>
         </tr>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>Max Evans</td>
           <td>evans@gmail.com</td>
           <td>54</td>
@@ -44,15 +106,20 @@
       </table>
     </div>
 
-    <form action="/">
-      <label for="customer_id">Customer ID:</label><br>
-      <input type="number" id="customer_id" name="customer_id"><br>
-      <label for="dName">FacilityID:</label><br>
-      <input type="number" id="dName" name="dName"><br>
-      <label for="dEmail">Email:</label><br>
-      <input type="text"><br>
-      <input type="submit" value="Add">
-    </form>
+    <div class="eventContainer">
+      <div class="formContainer">
+        <form action="/">
+          <h1>Add Driver</h1>
+          <label for="customer_id">Customer ID:</label><br>
+          <input type="number" id="customer_id" name="customer_id"><br>
+          <label for="dName">FacilityID:</label><br>
+          <input type="number" id="dName" name="dName"><br>
+          <label for="dEmail">Email:</label><br>
+          <input type="text"><br>
+          <input type="submit" value="Add">
+        </form>
+      </div>
+    </div>
 
   </body>
 

@@ -7,13 +7,75 @@
     
   <body>
     
-    <H1>Deliveries</H1>
+    <div class="nav">
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="drivers.html">Drivers</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="trucks.html">Trucks</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="customers.html">Customers</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="facilities.html">Facilities</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="deliveries.html">Deliveries</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+
+
+
+      <div class="entity-container">
+        <div class="ec-title">
+          <a href="orders.html">Orders</a>
+        </div>
+        <div class="ec-list-container">
+        </div>
+
+      </div>
+    </div>
+
+    <h1>Deliveries</h1>
     <!--valign (top, middle, bottom), align (left/center/right), height/wdith to td, colspan, rowspan-->
     <div class="deliveriesContainer">
       <table align="center" border="1" width="1000" height="100" class="tableBody">
         <thead>
           <tr align="center" class="headers">
-            <th width="100" height="35"></th>
+            <th></th>
             <th>Driver ID</th>
             <th>Truck ID</th>
             <th width="100">Starting Facility</th>
@@ -27,7 +89,7 @@
           </tr>
         </thead>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>1</td>
           <td>13</td>
           <td>Corvallis Warehouse</td>
@@ -40,7 +102,7 @@
           <td>4:18PM</td>
         </tr>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>3</td>
           <td>11</td>
           <td>Tennessee Warehouse</td>
@@ -53,7 +115,7 @@
           <td>5:32PM</td>
         </tr>
         <tr align="center" class="rows">
-          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
+          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>4</td>
           <td>1</td>
           <td>Austin Warehouse</td>
@@ -70,6 +132,7 @@
 
     <div class="eventContainer">
       <div class="formContainer">
+        <h1>Add Delivery</h1>
         <form action="/">
           <label for="DriverID">DriverID:</label><br>
           <input type="number" id="dName" name="dName"><br>
