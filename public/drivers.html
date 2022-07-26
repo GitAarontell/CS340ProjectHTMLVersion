@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="styles.css">
     <title>CS340 Group 70 </title>
   </head>
 
   <body>
     
     <H1>Drivers</H1>
-    <table>
-      <tr class="driver-row" data-id="0" data-name="0" data-email="0" data-ld="0" data-ed="0">
-        <th>add</th>
-        <th>delete</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-      </tr>
 
-    </table>
+    <div class="driversContainer">
+      <table border="1" width="1000" height="100" class="tableBody">
+        <thead>
+          <tr align="center" class="headers">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Late Deliveries</th>
+            <th>Early Deliveries</th>
+          </tr>
+        </thead>
+        <tr align="center" class="rows">
+          <td>Jay Phillips</td>
+          <td>jay@gmail.com</td>
+          <td>3</td>
+          <td>14</td>
+        </tr>
+        <tr align="center" class="rows">
+          <td>Arnold Reinhold</td>
+          <td>arnold@gmail.com</td>
+          <td>5</td>
+          <td>2</td>
+        </tr>
+        <tr align="center" class="rows">
+          <td>Max Evans</td>
+          <td>evans@gmail.com</td>
+          <td>54</td>
+          <td>109</td>
+        </tr>
+      </table>
+    </div>
 
     <form action="/">
       <label for="customer_id">Customer ID:</label><br>
@@ -27,7 +47,7 @@
       <input type="number" id="dName" name="dName"><br>
       <label for="dEmail">Email:</label><br>
       <input type="text"><br>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Add">
     </form>
 
   </body>

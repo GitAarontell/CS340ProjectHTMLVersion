@@ -1,8 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="styles.css">
     <title>CS340 Group 70 </title>
   </head>
+
+  <body>
+    
+    <H1>Orders</H1>
+
+    <div class="facilitiesContainer">
+      <table border="1" width="1000" height="100" class="tableBody">
+        <thead>
+          <tr align="center" class="headers">
+            <th>Customer ID</th>
+            <th>Starting Facility</th>
+            <th>Ending Facility</th>
+            <th>Current Facility</th>
+            <th>Volume</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tr align="center" class="rows">
+          <td>2</td>
+          <td>Corvallis Warehouse</td>
+          <td>Salem Warehouse</td>
+          <td>Corvallis Warehouse</td>
+          <td>2000cm3</td>
+          <td>4500lbs</td>
+        </tr>
+        <tr align="center" class="rows">
+          <td>1</td>
+          <td>Salem Warehouse</td>
+          <td>Tennessee Warehouse</td>
+          <td>Los Angelos Warehouse</td>
+          <td>2000cm3</td>
+          <td>3500lbs</td>
+        </tr>
+        <tr align="center" class="rows">
+          <td>3</td>
+          <td>Austin Warehouse</td>
+          <td>Corvallis Warehouse</td>
+          <td>Salem Warehouse</td>
+          <td>1700cm3</td>
+          <td>1900lbs</td>
+        </tr>
+
+      </table>
+    </div>
   
   <body>
     <H1>Orders</H1>
@@ -19,6 +64,7 @@
       <input type="number"><br>
       <label for="weight">Weight:</label><br>
       <input type="number"><br>
+      <input type="submit" value="Add">
     </form>
 
   </body>
