@@ -13,6 +13,7 @@
       <table align="center" border="1" width="1000" height="100" class="tableBody">
         <thead>
           <tr align="center" class="headers">
+            <th width="100" height="35"></th>
             <th>Driver ID</th>
             <th>Truck ID</th>
             <th width="100">Starting Facility</th>
@@ -25,7 +26,8 @@
             <th>Actual Time</th>
           </tr>
         </thead>
-        <tr class="rows">
+        <tr align="center" class="rows">
+          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>1</td>
           <td>13</td>
           <td>Corvallis Warehouse</td>
@@ -37,7 +39,8 @@
           <td>3:57PM</td>
           <td>4:18PM</td>
         </tr>
-        <tr class="rows">
+        <tr align="center" class="rows">
+          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>3</td>
           <td>11</td>
           <td>Tennessee Warehouse</td>
@@ -49,7 +52,8 @@
           <td>5:44PM</td>
           <td>5:32PM</td>
         </tr>
-        <tr class="rows">
+        <tr align="center" class="rows">
+          <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>4</td>
           <td>1</td>
           <td>Austin Warehouse</td>
@@ -63,29 +67,35 @@
         </tr>
       </table>
     </div>
-    <form action="/">
-      <label for="DriverID">DriverID:</label><br>
-      <input type="number" id="dName" name="dName"><br>
-      <label for="TruckID">TruckID:</label><br>
-      <input type="number" id="dName" name="dName"><br>
-      <label for="start_facility_id">Start_Facility_ID:</label><br>
-      <input type="number"><br>
-      <label for="end_facility_id">End_Facility_ID:</label><br>
-      <input type="number"><br>
-      <label for="total_volume">Total Volume:</label><br>
-      <input type="number"><br>
-      <label for="total_weight">Total Weight:</label><br>
-      <input type="number"><br>
-      <label for="late">Late:</label><br>
-      <input type="number"><br>
-      <label for="departure_time">Departure Time:</label><br>
-      <input type="number"><br>
-      <label for="expected_arrival_time">Expected Arrival Time:</label><br>
-      <input type="number"><br>
-      <label for="actual_arrival_time">Actual Arrival Time:</label><br>
-      <input type="number"><br>
-      <input type="submit" value="Add">
-    </form>
+
+    <div class="eventContainer">
+      <div class="formContainer">
+        <form action="/">
+          <label for="DriverID">DriverID:</label><br>
+          <input type="number" id="dName" name="dName"><br>
+          <label for="TruckID">TruckID:</label><br>
+          <input type="number" id="dName" name="dName"><br>
+          <label for="start_facility_id">Start_Facility_ID:</label><br>
+          <input type="number"><br>
+          <label for="end_facility_id">End_Facility_ID:</label><br>
+          <input type="number"><br>
+          <label for="total_volume">Total Volume:</label><br>
+          <input type="number"><br>
+          <label for="total_weight">Total Weight:</label><br>
+          <input type="number"><br>
+          <label for="late">Late:</label><br>
+          <input type="number"><br>
+          <label for="departure_time">Departure Time:</label><br>
+          <input type="number"><br>
+          <label for="expected_arrival_time">Expected Arrival Time:</label><br>
+          <input type="number"><br>
+          <label for="actual_arrival_time">Actual Arrival Time:</label><br>
+          <input type="number"><br>
+          <input type="submit" value="Add">
+        </form>
+      </div>
+    </div>
+    
 
   </body>
 

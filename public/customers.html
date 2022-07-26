@@ -9,33 +9,40 @@
     
     <H1>Customers</H1>
 
-    <table class="tableBody">
+    <table align="center" border="1" width="700" height="100" class="tableBody">
       <tr class="headers">
+        <th width="100"></th>
         <th>Name</th>
         <th>Email</th>
       </tr>
-      <tr class="rows">
+      <tr align="center" height="35" class="rows">
+        <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
         <td>John McArthur</td>
         <td>john@gmail.com</td>
       </tr>
-      <tr class="rows">
+      <tr align="center" class="rows">
+        <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
         <td>Linus McKinnley</td>
         <td>linus@gmail.com</td>
       </tr>
-      <tr class="rows">
+      <tr align="center" class="rows">
+        <td> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
         <td>Ferdinand Talentino</td>
         <td>ferd@gmail.com</td>
       </tr>
     </table>
 
-    <form action="/">
-      <label for="dname">Name:</label><br>
-      <input type="text" id="dName" name="dName"><br>
-      <label for="Email">Email:</label><br>
-      <input type="text"><br>
-      <input type="submit" value="Submit">
-    </form>
-
+    <div class="eventContainer">
+      <div class="formContainer">
+        <form action="/">
+          <label for="dname">Name:</label><br>
+          <input type="text" id="dName" name="dName"><br>
+          <label for="Email">Email:</label><br>
+          <input type="text"><br>
+          <input type="submit" value="Add">
+        </form>
+      </div>
+    </div>
   </body>
 
 
