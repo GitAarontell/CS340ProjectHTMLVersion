@@ -1,0 +1,30 @@
+table{
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    border-style: solid;
+    margin: 0;
+    padding: 0;
+}
+
+tbody{
+    width: 100%;
+}
+
+tr{
+    width: 100%;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+}
+
+td{
+    border-right-style: solid;
+}
