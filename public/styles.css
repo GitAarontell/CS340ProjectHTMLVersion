@@ -38,6 +38,22 @@ body{
     align-items: center;
 }
 
+.mainNav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+}
+
+.navContainers{
+    margin: 10px 0 10px 0;
+}
+
+a:hover{
+    transform: scale(1.2);
+}
+
 .nav{
     width: 80%;
     display: flex;
