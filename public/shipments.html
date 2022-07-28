@@ -16,7 +16,6 @@
         </div>
       </div>
 
-
       <div class="entity-container">
         <div class="ec-title">
           <a href="trucks.html">Trucks</a>
@@ -24,7 +23,6 @@
         <div class="ec-list-container">
         </div>
       </div>
-
 
       <div class="entity-container">
         <div class="ec-title">
@@ -42,7 +40,6 @@
         <div class="ec-list-container">
         </div>
       </div>
-
 
       <div class="entity-container">
         <div class="ec-title">
@@ -86,63 +83,60 @@
 
     </div>
 
-    <h1>Trucks</h1>
+    <h1>Shipments</h1>
 
     <div class="driversContainer">
       <table border="1" width="1000" height="100" class="tableBody">
         <thead>
           <tr align="center" class="headers">
             <th></th>
-            <th>Current Facility ID</th>
-            <th>License Plate</th>
-            <th>Max Weight</th>
-            <th>Max Volume</th>
+            <th>Customer ID</th>
+            <th>Target Facility</th>
+            <th>Weight</th>
+            <th>Volume</th>
           </tr>
         </thead>
         <tr align="center" class="rows">
           <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>1</td>
-          <td>HA3421LP</td>
-          <td>5000lbs</td>
-          <td>3500cm3</td>
+          <td>Corvallis Warehouse</td>
+          <td>30lbs</td>
+          <td>20cm3</td>
         </tr>
         <tr align="center" class="rows">
           <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>2</td>
-          <td>89PAD932</td>
-          <td>2000lbs</td>
-          <td>2000cm3</td>
+          <td>Tennessee Warehouse</td>
+          <td>3lbs</td>
+          <td>5cm3</td>
         </tr>
         <tr align="center" class="rows">
           <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>3</td>
-          <td>87GJI09R</td>
-          <td>4500lbs</td>
-          <td>3000cm3</td>
+          <td>Los Angelos Warehouse</td>
+          <td>5lbs</td>
+          <td>4cm3</td>
         </tr>
       </table>
     </div>
     
     <div class="eventContainer">
       <div class="formContainer">
-        <h1>Add Truck</h1>
+        <h1>Add Shipment</h1>
         <form action="/">
-          <label for="current_facility_id">Current Facility ID:</label><br>
-          <input type="number" id="current_facility_id" name="current_facility_id"><br>
-          <label for="plate">Plate:</label><br>
+          <label for="customerID">Customer ID:</label><br>
+          <input type="number" id="customerID" name="dcustomerID"><br>
+          <label for="trgFacility">Target Facility:</label><br>
           <input type="text"><br>
-          <label for="total_volume">Volume:</label><br>
-          <input type="number"><br>
-          <label for="total_weight">Weight:</label><br>
-          <input type="number"><br>
+          <label for="weight">Weight:</label><br>
+          <input type="number" id="weight" name="dweight"><br>
+          <label for="volume">Volume:</label><br>
+          <input type="number" id="volume" name="dvolume"><br>
           <input type="submit" value="Add">
         </form>
       </div>
-
       </div>
-
     </div>
-
   </body>
 
 
