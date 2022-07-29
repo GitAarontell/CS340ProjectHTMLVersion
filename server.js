@@ -8,6 +8,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+app.use(express.json());
+
 let db = require('./connection.js');
 let connection = db.pool;
 
@@ -35,13 +37,15 @@ app.get('/customerData', (req,res) => {
 
 app.post('/addEntity', (req, res) => {
     
-    console.log(req.body);
-    connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.dName}", "${req.body.dEmail}");`, (err) => {
+    connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.name}", "${req.body.email}");`, (err, results) => {
         if (err) {
             res.status(500).json({error: err});
         }
+        console.log(results.OkPacket);
+        res.status(200).json({id: results});
     });
-    res.status(200).json({OK: '200'});
+    
+    
 });
 
 app.delete('/delete/:id/:table', (req, res) => {
@@ -54,7 +58,15 @@ app.delete('/delete/:id/:table', (req, res) => {
 })
 
 app.put('/editCustomer', (req, res) => {
-    console.log(req.params);
+    console.log(req.body);
+    console.log(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE customer_id = '${req.body.id}';`)
+    connection.query(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE customer_id = '${req.body.id}';`, (err) => {
+        if (err) {
+            res.status(500).json({error: err});
+        }
+        
+    })
+    res.status(200);
 })
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

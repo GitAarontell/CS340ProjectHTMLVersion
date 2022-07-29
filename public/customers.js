@@ -4,9 +4,83 @@ let tableBodyCustomer = document.getElementsByClassName('tableBodyCustomer');
 // grabs the tbody element of the table
 let table = document.querySelector('tbody');
 
+// grabs the add button and the selections for the search
 let addButton = document.querySelector('.addEntity');
 let selection = document.getElementById('selections');
+
+// used for edit button event listener
 check = false;
+
+class MakeRow {
+    constructor(name, email, id){
+        this.createNewRow(name, email, id);
+    }
+
+    createNewRow(name, email, id){
+        let tr = document.createElement('tr');
+        tr.setAttribute('align', 'center');
+        tr.setAttribute('height', '35');
+        tr.className = 'rows';
+
+        // create the table data elements
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+
+        // set text content of table data to name and email
+        i1 = document.createElement('input');
+        i2 = document.createElement('input');
+
+        i1.value = name;
+        i2.value = email;
+
+        i1.setAttribute('readonly', 'readonly');
+        i2.setAttribute('readonly', 'readonly');
+        //td2.textContent = element.name;
+        //td3.textContent = element.email;
+        td2.appendChild(i1);
+        td3.appendChild(i2);
+
+        // set td1 attributes
+        td1.setAttribute('width', '100');
+        td1.setAttribute('height', '35');
+        
+        // create the edit and delete buttons
+        editButton = document.createElement('input');
+        delButton = document.createElement('input');
+
+        // create edit and delete buttons
+        editButton.setAttribute('type', 'button');
+        editButton.setAttribute('value', 'Edit');
+        editButton.className = 'editButton';
+        editButton.id = id;
+
+        delButton.setAttribute('type', 'button');
+        delButton.setAttribute('value', 'Del');
+        delButton.className = 'delButton';
+        delButton.id = id;
+
+        // append the edit button and delete button to table data 1
+        td1.appendChild(editButton);
+        td1.appendChild(delButton);
+
+        // add as a child element all table data to table row
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+
+        // append the row to the table
+        table.appendChild(tr);
+
+        // adds options to the customer search
+        option = document.createElement('option');
+        option.textContent = element.name;
+        option.setAttribute('value', element.name);
+
+        selection.appendChild(option);
+    }
+}
+
 // make a request to this url which is on the express server as a get request
 fetch('/customersinfo', {method: 'GET'})
 .then(data => {
@@ -16,10 +90,10 @@ fetch('/customersinfo', {method: 'GET'})
 }).then(newData => {
     
     // newData.forEach(element => {
-    //     new Row(element.name, element.email);
+    //     new MakeRow(element.name, element.email, element.id);
     // });
 
-    // take the now json data and loop through it
+    //take the now json data and loop through it
     newData.forEach(element => {
         let tr = document.createElement('tr');
         tr.setAttribute('align', 'center');
@@ -95,62 +169,64 @@ table.addEventListener('click', (e) => {
         table.removeChild(e.target.parentElement.parentElement);
     }
     else if(e.target.className == 'editButton'){
+        // grabs name and email based on proximity to e.target
+        usrName = e.target.parentElement.nextElementSibling.childNodes[0];
+        email= e.target.parentElement.nextElementSibling.nextElementSibling.childNodes[0];
+
         if (check == false){
             e.target.setAttribute('value', 'Update');
             check = true;
-            console.log(e.target.parentElement.nextElementSibling.childNodes[0]);
-            e.target.parentElement.nextElementSibling.childNodes[0].removeAttribute('readOnly');
-            e.target.parentElement.nextElementSibling.nextElementSibling.childNodes[0].removeAttribute('readOnly');
+            usrName.removeAttribute('readOnly');
+            email.removeAttribute('readOnly');
         } else {
             e.target.setAttribute('value', 'Edit');
             check = false;
-            e.target.parentElement.nextElementSibling.childNodes[0].setAttribute('readOnly', 'readonly');
-            e.target.parentElement.nextElementSibling.nextElementSibling.childNodes[0].setAttribute('readOnly', 'readonly');
-            fetch('/editCustomer', {
+            
+            usrName.setAttribute('readOnly', 'readonly');
+            email.setAttribute('readOnly', 'readonly');
+
+            fetch('/editCustomer', 
+            {
                 method: 'PUT',
-                body: JSON.stringify({
-                userId: 1,
-                id: 5,
-                title: 'hello task',
-                completed: false
+                body: JSON.stringify(
+                {
+                    'name': usrName.value,
+                    'email': email.value,
+                    'table': 'Customers',
+                    'id': e.target.id,
                 }),
                 headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
+                    'Content-Type': 'application/json',
+                },
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 });
 
-// addButton.addEventListener('click', (e) => {
-//     //e.preventDefault();
-//     // if the class name of the clicked element within table is delButton
-//     let email = e.target.previousElementSibling.previousElementSibling.value;
-//     let name = e.target.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.value;
+addButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    // if the class name of the clicked element within table is delButton
+    let email = e.target.previousElementSibling.previousElementSibling.value;
+    let name = e.target.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.value;
 
-//     data = new FormData();
-//     data.append("name", name);
-//     data.append("eamil", email);
-//     fetch('/addEntity',
-//     {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
+    fetch('/addEntity',
+    {
+        method: 'POST',
+        body: JSON.stringify(
+            {
+                'name': name,
+                'email': email
+            }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
         
-//     }). catch(err => {console.log(err);});
-// });
+    }).then(data => {
+        return data.json();
+    }).then(jData =>{
 
-
-
-class Row {
-    constructor(name, email){
-        this.createNewRow(name, email);
-    }
-
-    createNewRow(name, email){
-        // create the table row element with align and height attributes and class name
         let tr = document.createElement('tr');
         tr.setAttribute('align', 'center');
         tr.setAttribute('height', '35');
@@ -162,8 +238,17 @@ class Row {
         let td3 = document.createElement('td');
 
         // set text content of table data to name and email
-        td2.textContent = name;
-        td3.textContent = email;
+        i1 = document.createElement('input');
+        i2 = document.createElement('input');
+
+        i1.value = name;
+        i2.value = email;
+
+        i1.setAttribute('readonly', 'readonly');
+        i2.setAttribute('readonly', 'readonly');
+
+        td2.appendChild(i1);
+        td3.appendChild(i2);
 
         // set td1 attributes
         td1.setAttribute('width', '100');
@@ -176,12 +261,16 @@ class Row {
         // create edit and delete buttons
         editButton.setAttribute('type', 'button');
         editButton.setAttribute('value', 'Edit');
+        editButton.className = 'editButton';
+        editButton.id = jData.id.insertId;
+
         delButton.setAttribute('type', 'button');
         delButton.setAttribute('value', 'Del');
         delButton.className = 'delButton';
+        delButton.id = jData.id.insertId;
 
         // append the edit button and delete button to table data 1
-        //td1.appendChild(editButton);
+        td1.appendChild(editButton);
         td1.appendChild(delButton);
 
         // add as a child element all table data to table row
@@ -191,5 +280,14 @@ class Row {
 
         // append the row to the table
         table.appendChild(tr);
-    }
-}
+
+        // adds options to the customer search
+        option = document.createElement('option');
+        option.textContent = element.name;
+        option.setAttribute('value', element.name);
+
+        selection.appendChild(option);
+    }).catch(err => {
+        console.log(err);
+    });
+});
