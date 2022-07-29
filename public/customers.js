@@ -5,6 +5,7 @@ let tableBodyCustomer = document.getElementsByClassName('tableBodyCustomer');
 let table = document.querySelector('tbody');
 
 let addButton = document.querySelector('.addEntity');
+let selection = document.getElementById('selections');
 
 // make a request to this url which is on the express server as a get request
 fetch('/customersinfo', {method: 'GET'})
@@ -31,8 +32,18 @@ fetch('/customersinfo', {method: 'GET'})
         let td3 = document.createElement('td');
 
         // set text content of table data to name and email
+        //i1 = document.createElement('input')
+        //i2 = document.createElement('input')
+
+        //i1.textContent = element.name;
+        //i2.textContent = element.email;
+
+        //i1.setAttribute('readOnly', 'True')
+        //i2.setAttribute('readOnly', 'True')
         td2.textContent = element.name;
         td3.textContent = element.email;
+        //td2.appendChild(i1);
+        //td3.appendChild(i2);
 
         // set td1 attributes
         td1.setAttribute('width', '100');
@@ -62,6 +73,12 @@ fetch('/customersinfo', {method: 'GET'})
 
         // append the row to the table
         table.appendChild(tr);
+
+        option = document.createElement('option');
+        option.textContent = element.name;
+        option.setAttribute('value', element.name);
+
+        selection.appendChild(option);
     });
 });
 
@@ -74,6 +91,9 @@ table.addEventListener('click', (e) => {
         // element of the table, so removes that row from the table
         table.removeChild(e.target.parentElement.parentElement);
     }
+    // else if(e.target.className == 'editButton'){
+        
+    // }
 });
 
 // addButton.addEventListener('click', (e) => {

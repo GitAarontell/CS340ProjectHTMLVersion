@@ -1,3 +1,4 @@
+const { query } = require('express');
 const express = require('express');
 const app = express();
 const PORT = 65438;
@@ -21,6 +22,16 @@ app.get('/customersinfo', (req, res) => {
         res.status(200).json(results);
     });
 });
+
+app.get('/customerData', (req,res) => {
+    console.log(req.query);
+    connection.query(`SELECT * FROM Customers WHERE name = "${req.query.customers}";`, (err, results) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200).json(results);
+    });
+})
 
 app.post('/addEntity', (req, res) => {
     
