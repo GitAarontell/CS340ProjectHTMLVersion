@@ -6,7 +6,7 @@
   </head>
 
   <body>
-
+    
     <div class="nav">
       <div class="entity-container">
         <div class="ec-title">
@@ -88,37 +88,24 @@
 
     <h1>Customers</h1>
 
-    <table align="center" border="1" width="700" height="100" class="tableBody">
-      <tr class="headers">
-        <th></th>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-      <tr align="center" height="35" class="rows">
-        <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-        <td>John McArthur</td>
-        <td>john@gmail.com</td>
-      </tr>
-      <tr align="center" class="rows">
-        <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-        <td>Linus McKinnley</td>
-        <td>linus@gmail.com</td>
-      </tr>
-      <tr align="center" class="rows">
-        <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-        <td>Ferdinand Talentino</td>
-        <td>ferd@gmail.com</td>
-      </tr>
+    <table align="center" border="1" width="700" class="tableBodyCustomer">
+      <tbody>
+        <tr class="headers">
+          <th></th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </tbody>
     </table>
 
     <div class="eventContainer">
       <div class="formContainer">
         <h1>Add Customer</h1>
-        <form action="/">
+        <form action="/testing" method="POST">
           <label for="dname">Name:</label><br>
-          <input type="text" id="dName" name="dName"><br>
+          <input type="text" id="Name" name="dName"><br>
           <label for="Email">Email:</label><br>
-          <input type="text"><br>
+          <input type="text" id="Email" name="dEmail"><br>
           <input type="submit" value="Add">
         </form>
       </div>
@@ -136,7 +123,8 @@
         </form>
       </div>
     </div>
+    <script src="customers.js"></script>
   </body>
 
-
+  
 </html>
