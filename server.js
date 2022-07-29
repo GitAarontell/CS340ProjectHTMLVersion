@@ -53,8 +53,8 @@ app.delete('/delete/:id/:table', (req, res) => {
     });
 })
 
-app.put('editCustomer', (req, res) => {
-    console.log(req.body);
+app.put('/editCustomer', (req, res) => {
+    console.log(req.params);
 })
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
