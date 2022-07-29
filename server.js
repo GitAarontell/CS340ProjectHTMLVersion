@@ -10,6 +10,8 @@ app.use(express.urlencoded({
 let db = require('./connection.js');
 let connection = db.pool;
 
+
+// requests handlers
 app.get('/customersinfo', (req, res) => {
     // send query through the connection
     connection.query('SELECT customer_id, name, email FROM Customers;', (err, results) => {
@@ -20,22 +22,28 @@ app.get('/customersinfo', (req, res) => {
     });
 });
 
-app.post('/testing', (req, res) => {
+app.post('/addEntity', (req, res) => {
     
-    console.log(req.body)
-    connection.query('INSERT INTO tester(name) VALUES ("Bob");', (err) => {
+    console.log(req.body);
+    connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.dName}", "${req.body.dEmail}");`, (err) => {
         if (err) {
-            console.log(err)
+            res.status(500).json({error: err});
         }
     });
-    res.send('Hopefully it worked!');
+    res.status(200).json({OK: '200'});
 });
 
-app.delete('/delete/:id', (req, res) => {
-    console.log(req.params.id);
-    // connection.query('DELETE;', (err, rows, fields) => {
+app.delete('/delete/:id/:table', (req, res) => {
+    connection.query(`DELETE FROM ${req.params.table} WHERE customer_id = ${req.params.id};`, (err) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200);
+    });
+})
 
-    // });
+app.put('editCustomer', (req, res) => {
+    console.log(req.body);
 })
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

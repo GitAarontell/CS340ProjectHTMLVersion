@@ -101,12 +101,12 @@
     <div class="eventContainer">
       <div class="formContainer">
         <h1>Add Customer</h1>
-        <form action="/testing" method="POST">
+        <form id='myForm' action="/addEntity" method="POST">
           <label for="dname">Name:</label><br>
           <input type="text" id="Name" name="dName"><br>
           <label for="Email">Email:</label><br>
           <input type="text" id="Email" name="dEmail"><br>
-          <input type="submit" value="Add">
+          <input class='addEntity' type="submit" value="Add">
         </form>
       </div>
 
@@ -122,6 +122,20 @@
           <input type="submit" value="Search">
         </form>
       </div>
+
+      <div class="formContainer">
+        <h1>Edit Customer</h1>
+        <form action="/">
+          <label for="name">Name:</label><br>
+          <input type="text" name="name"><br>
+
+          <label for="email">Email:</label><br>
+          <input type="text" name="email"><br>
+
+          <input type="submit" value="Update">
+        </form>
+      </div>
+
     </div>
     <script src="customers.js"></script>
   </body>
