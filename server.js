@@ -13,9 +13,8 @@ app.use(express.json());
 let db = require('./connection.js');
 let connection = db.pool;
 
-
 // requests handlers
-app.get('/customersinfo', (req, res) => {
+app.get('/customerInfo', (req, res) => {
     // send query through the connection
     connection.query('SELECT customer_id, name, email FROM Customers;', (err, results) => {
         if (err){
@@ -25,15 +24,25 @@ app.get('/customersinfo', (req, res) => {
     });
 });
 
-app.get('/customerData', (req,res) => {
-    console.log(req.query);
-    connection.query(`SELECT * FROM Customers WHERE name = "${req.query.customers}";`, (err, results) => {
-        if (err){
-            res.status(500).json({error: err});
-        }
-        res.status(200).json(results);
-    });
-})
+app.get('/customerByName/:name', (req,res) => {
+  var name = req.params.name;
+  connection.query(`SELECT * FROM Customers WHERE name = "${name}";`, (err, results) => {
+      if (err){
+          res.status(500).json({error: err});
+      }
+      res.status(200).json(results);
+  });
+});
+
+// app.get('/customerData', (req,res) => {
+//     console.log(req.query);
+//     connection.query(`SELECT * FROM Customers WHERE name = "${req.query.customers}";`, (err, results) => {
+//         if (err){
+//             res.status(500).json({error: err});
+//         }
+//         res.status(200).json(results);
+//     });
+// })
 
 app.put('/addCustomer', (req, res) => {
 

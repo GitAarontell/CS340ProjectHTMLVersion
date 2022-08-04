@@ -8,6 +8,8 @@ let table = document.querySelector('tbody');
 let addButton = document.querySelector('.addEntity');
 let selection = document.getElementById('selections');
 
+let searchButton = document.getElementById('searchSubmit');
+
 // used for edit button event listener
 check = false;
 /*
@@ -148,7 +150,7 @@ function makeCustomerRow(customer) {
 }
 
 // make a request to this url which is on the express server as a get request
-fetch('/customersinfo', {method: 'GET'})
+fetch('/customerInfo', {method: 'GET'})
 .then(data => {
     // get the data that was sent back and return it as json to next promise
     // will send a json object of current customers
@@ -207,26 +209,49 @@ addButton.addEventListener('click', (e) => {
     let email = e.target.previousElementSibling.previousElementSibling.value;
     let name = e.target.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.value;
 
-    fetch('/addCustomer',
-    {
-        method: 'PUT',
-        body: JSON.stringify(
-            {
-                'name': name,
-                'email': email
-            }),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+    if (name != "" && email != "") {
+      fetch('/addCustomer',
+      {
+          method: 'PUT',
+          body: JSON.stringify(
+              {
+                  'name': name,
+                  'email': email
+              }),
+          headers: {
+              'Content-Type': 'application/json',
+          },
 
-    }).then(data => {
-        return data.json();
-    }).then(jData =>{
-        console.log("called");
-        // makeCustomerRow needs to be implemented with a customer json passed into it
-        makeCustomerRow({'name': name, 'email': email, 'customer_id': jData.id.insertId})
+      }).then(data => {
+          return data.json();
+      }).then(jData =>{
+          // makeCustomerRow needs to be implemented with a customer json passed into it
+          makeCustomerRow({'name': name, 'email': email, 'customer_id': jData.id.insertId})
 
-    }).catch(err => {
-        console.log(err);
-    });
+      }).catch(err => {
+          console.log(err);
+      });
+    } else {
+      console.log("Addition Unsuccessful: Missing Data");
+    }
+});
+
+searchButton.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  // remove all entries in the table
+  for (let i = table.children.length - 1; i > 0; i --) {
+    table.children[i].remove();
+  }
+
+  let name = selection.value;
+
+  // add new entries
+  fetch('/customerByName/' + name, {method: 'GET',})
+  .then(data => {
+      // get the data that was sent back and return it as json to next promise
+      // will send a json object of current customers
+      return data.json();
+  }).then(newData => { newData.forEach(element => makeCustomerRow(element))});
+
 });
