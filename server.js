@@ -35,8 +35,8 @@ app.get('/customerData', (req,res) => {
     });
 })
 
-app.post('/addEntity', (req, res) => {
-    
+app.put('/addCustomer', (req, res) => {
+
     connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.name}", "${req.body.email}");`, (err, results) => {
         if (err) {
             res.status(500).json({error: err});
@@ -44,8 +44,8 @@ app.post('/addEntity', (req, res) => {
         console.log(results.OkPacket);
         res.status(200).json({id: results});
     });
-    
-    
+
+
 });
 
 app.delete('/delete/:id/:table', (req, res) => {
@@ -64,7 +64,7 @@ app.put('/editCustomer', (req, res) => {
         if (err) {
             res.status(500).json({error: err});
         }
-        
+
     })
     res.status(200);
 })
