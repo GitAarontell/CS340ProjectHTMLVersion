@@ -10,7 +10,7 @@ let selection = document.getElementById('selections');
 
 // used for edit button event listener
 check = false;
-
+/*
 class MakeRow {
     constructor(name, email, id){
         this.createNewRow(name, email, id);
@@ -44,7 +44,7 @@ class MakeRow {
         // set td1 attributes
         td1.setAttribute('width', '100');
         td1.setAttribute('height', '35');
-        
+
         // create the edit and delete buttons
         editButton = document.createElement('input');
         delButton = document.createElement('input');
@@ -80,6 +80,72 @@ class MakeRow {
         selection.appendChild(option);
     }
 }
+*/
+
+// makes a new row document element and appends it to the table given a single customer entity
+function makeCustomerRow(customer) {
+  let tr = document.createElement('tr');
+  tr.setAttribute('align', 'center');
+  tr.setAttribute('height', '35');
+  tr.className = 'rows';
+
+  // create the table data elements
+  let td1 = document.createElement('td');
+  let td2 = document.createElement('td');
+  let td3 = document.createElement('td');
+
+  // set text content of table data to name and email
+  i1 = document.createElement('input')
+  i2 = document.createElement('input')
+
+  i1.value = customer.name;
+  i2.value = customer.email;
+
+  i1.setAttribute('readonly', 'readonly')
+  i2.setAttribute('readonly', 'readonly')
+  //td2.textContent = element.name;
+  //td3.textContent = element.email;
+  td2.appendChild(i1);
+  td3.appendChild(i2);
+
+  // set td1 attributes
+  td1.setAttribute('width', '100');
+  td1.setAttribute('height', '35');
+
+  // create the edit and delete buttons
+  editButton = document.createElement('input');
+  delButton = document.createElement('input');
+
+  // create edit and delete buttons
+  editButton.setAttribute('type', 'button');
+  editButton.setAttribute('value', 'Edit');
+  editButton.className = 'editButton';
+  editButton.id = customer.customer_id;
+
+  delButton.setAttribute('type', 'button');
+  delButton.setAttribute('value', 'Del');
+  delButton.className = 'delButton';
+  delButton.id = customer.customer_id;
+
+  // append the edit button and delete button to table data 1
+  td1.appendChild(editButton);
+  td1.appendChild(delButton);
+
+  // add as a child element all table data to table row
+  tr.appendChild(td1);
+  tr.appendChild(td2);
+  tr.appendChild(td3);
+
+  // append the row to the table
+  table.appendChild(tr);
+
+  // adds options to the customer search
+  option = document.createElement('option');
+  option.textContent = customer.name;
+  option.setAttribute('value', customer.name);
+
+  selection.appendChild(option);
+}
 
 // make a request to this url which is on the express server as a get request
 fetch('/customersinfo', {method: 'GET'})
@@ -87,77 +153,7 @@ fetch('/customersinfo', {method: 'GET'})
     // get the data that was sent back and return it as json to next promise
     // will send a json object of current customers
     return data.json();
-}).then(newData => {
-    
-    // newData.forEach(element => {
-    //     new MakeRow(element.name, element.email, element.id);
-    // });
-
-    //take the now json data and loop through it
-    newData.forEach(element => {
-        let tr = document.createElement('tr');
-        tr.setAttribute('align', 'center');
-        tr.setAttribute('height', '35');
-        tr.className = 'rows';
-
-        // create the table data elements
-        let td1 = document.createElement('td');
-        let td2 = document.createElement('td');
-        let td3 = document.createElement('td');
-
-        // set text content of table data to name and email
-        i1 = document.createElement('input')
-        i2 = document.createElement('input')
-
-        i1.value = element.name;
-        i2.value = element.email;
-
-        i1.setAttribute('readonly', 'readonly')
-        i2.setAttribute('readonly', 'readonly')
-        //td2.textContent = element.name;
-        //td3.textContent = element.email;
-        td2.appendChild(i1);
-        td3.appendChild(i2);
-
-        // set td1 attributes
-        td1.setAttribute('width', '100');
-        td1.setAttribute('height', '35');
-        
-        // create the edit and delete buttons
-        editButton = document.createElement('input');
-        delButton = document.createElement('input');
-
-        // create edit and delete buttons
-        editButton.setAttribute('type', 'button');
-        editButton.setAttribute('value', 'Edit');
-        editButton.className = 'editButton';
-        editButton.id = element.customer_id;
-
-        delButton.setAttribute('type', 'button');
-        delButton.setAttribute('value', 'Del');
-        delButton.className = 'delButton';
-        delButton.id = element.customer_id;
-
-        // append the edit button and delete button to table data 1
-        td1.appendChild(editButton);
-        td1.appendChild(delButton);
-
-        // add as a child element all table data to table row
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-
-        // append the row to the table
-        table.appendChild(tr);
-
-        // adds options to the customer search
-        option = document.createElement('option');
-        option.textContent = element.name;
-        option.setAttribute('value', element.name);
-
-        selection.appendChild(option);
-    });
-});
+}).then(newData => { newData.forEach(element => makeCustomerRow(element))});
 
 // add click event listener to customer table
 table.addEventListener('click', (e) => {
@@ -181,11 +177,11 @@ table.addEventListener('click', (e) => {
         } else {
             e.target.setAttribute('value', 'Edit');
             check = false;
-            
+
             usrName.setAttribute('readOnly', 'readonly');
             email.setAttribute('readOnly', 'readonly');
 
-            fetch('/editCustomer', 
+            fetch('/editCustomer',
             {
                 method: 'PUT',
                 body: JSON.stringify(
@@ -222,7 +218,7 @@ addButton.addEventListener('click', (e) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        
+
     }).then(data => {
         return data.json();
     }).then(jData =>{
@@ -253,7 +249,7 @@ addButton.addEventListener('click', (e) => {
         // set td1 attributes
         td1.setAttribute('width', '100');
         td1.setAttribute('height', '35');
-        
+
         // create the edit and delete buttons
         editButton = document.createElement('input');
         delButton = document.createElement('input');
