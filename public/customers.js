@@ -10,6 +10,8 @@ let selection = document.getElementById('selections');
 
 let searchButton = document.getElementById('searchSubmit');
 
+const selectAllString = "All Customers";
+
 // used for edit button event listener
 check = false;
 /*
@@ -85,7 +87,7 @@ class MakeRow {
 */
 
 // makes a new row document element and appends it to the table given a single customer entity
-function makeCustomerRow(customer) {
+function makeCustomerRow(customer, addOption = true) {
   let tr = document.createElement('tr');
   tr.setAttribute('align', 'center');
   tr.setAttribute('height', '35');
@@ -141,12 +143,15 @@ function makeCustomerRow(customer) {
   // append the row to the table
   table.appendChild(tr);
 
-  // adds options to the customer search
-  option = document.createElement('option');
-  option.textContent = customer.name;
-  option.setAttribute('value', customer.name);
 
-  selection.appendChild(option);
+  // adds options to the customer search
+  if (addOption) {
+    option = document.createElement('option');
+    option.textContent = customer.name;
+    option.setAttribute('value', customer.name);
+
+    selection.appendChild(option);
+  }
 }
 
 // make a request to this url which is on the express server as a get request
@@ -155,7 +160,18 @@ fetch('/customerInfo', {method: 'GET'})
     // get the data that was sent back and return it as json to next promise
     // will send a json object of current customers
     return data.json();
-}).then(newData => { newData.forEach(element => makeCustomerRow(element))});
+}).then(newData => {
+
+  // add general search option
+  option = document.createElement('option');
+  option.textContent = selectAllString;
+  option.setAttribute('value', selectAllString);
+  selection.appendChild(option);
+
+  // add all customer data rows
+  newData.forEach(element => makeCustomerRow(element))
+
+});
 
 // add click event listener to customer table
 table.addEventListener('click', (e) => {
@@ -246,12 +262,24 @@ searchButton.addEventListener('click', (e) => {
 
   let name = selection.value;
 
-  // add new entries
-  fetch('/customerByName/' + name, {method: 'GET',})
-  .then(data => {
-      // get the data that was sent back and return it as json to next promise
-      // will send a json object of current customers
-      return data.json();
-  }).then(newData => { newData.forEach(element => makeCustomerRow(element))});
+
+  if (name != selectAllString) {
+    // add new entries
+    fetch('/customerByName/' + name, {method: 'GET',})
+    .then(data => {
+        // get the data that was sent back and return it as json to next promise
+        // will send a json object of current customers
+        return data.json();
+    }).then(newData => { newData.forEach(element => makeCustomerRow(element, false))});
+  } else {
+    // add new entries
+    fetch('/customerInfo', {method: 'GET'})
+    .then(data => {
+        // get the data that was sent back and return it as json to next promise
+        // will send a json object of current customers
+        return data.json();
+    }).then(newData => { newData.forEach(element => makeCustomerRow(element, false))});
+  }
+
 
 });
