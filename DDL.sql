@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS Facilities;
 DROP TABLE IF EXISTS Customers;
 
 CREATE OR REPLACE TABLE Customers (
-  customer_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   name varchar(45) NOT NULL,
   email varchar(45) NOT NULL,
 
@@ -17,7 +17,7 @@ CREATE OR REPLACE TABLE Customers (
 );
 
 CREATE OR REPLACE TABLE Facilities (
-  facility_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   customer_id int,
   location varchar(45) NOT NULL,
   name varchar(45) NOT NULL,
@@ -27,7 +27,7 @@ CREATE OR REPLACE TABLE Facilities (
 );
 
 CREATE OR REPLACE TABLE Trucks (
-  truck_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   current_facility_id int,
   plate varchar(7),
   max_weight int NOT NULL,
@@ -38,7 +38,7 @@ CREATE OR REPLACE TABLE Trucks (
 );
 
 CREATE OR REPLACE TABLE Drivers (
-  driver_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   name varchar(45) NOT NULL,
   email varchar(45) NOT NULL,
   late_deliveries int NOT NULL DEFAULT 0,
@@ -48,7 +48,7 @@ CREATE OR REPLACE TABLE Drivers (
 );
 
 CREATE OR REPLACE TABLE Orders (
-  order_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   customer_id int,
   start_facility_id int,
   end_facility_id int,
@@ -64,7 +64,7 @@ CREATE OR REPLACE TABLE Orders (
 );
 
 CREATE OR REPLACE TABLE Deliveries (
-  delivery_id int NOT NULL AUTO_INCREMENT,
+  id int NOT NULL AUTO_INCREMENT,
   driver_id int NOT NULL,
   truck_id int NOT NULL,
   start_facility_id int NOT NULL,
