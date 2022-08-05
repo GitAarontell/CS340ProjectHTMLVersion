@@ -155,7 +155,7 @@ function makeCustomerRow(customer, addOption = true) {
 }
 
 // make a request to this url which is on the express server as a get request
-fetch('/customerInfo', {method: 'GET'})
+fetch('/allCustomers', {method: 'GET'})
 .then(data => {
     // get the data that was sent back and return it as json to next promise
     // will send a json object of current customers
@@ -273,7 +273,7 @@ searchButton.addEventListener('click', (e) => {
     }).then(newData => { newData.forEach(element => makeCustomerRow(element, false))});
   } else {
     // add new entries
-    fetch('/customerInfo', {method: 'GET'})
+    fetch('/allCustomers', {method: 'GET'})
     .then(data => {
         // get the data that was sent back and return it as json to next promise
         // will send a json object of current customers

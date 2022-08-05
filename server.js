@@ -14,7 +14,9 @@ let db = require('./connection.js');
 let connection = db.pool;
 
 // requests handlers
-app.get('/customerInfo', (req, res) => {
+
+// Manage Customer Requests
+app.get('/allCustomers', (req, res) => {
     // send query through the connection
     connection.query('SELECT customer_id, name, email FROM Customers;', (err, results) => {
         if (err){
@@ -34,16 +36,6 @@ app.get('/customerByName/:name', (req,res) => {
   });
 });
 
-// app.get('/customerData', (req,res) => {
-//     console.log(req.query);
-//     connection.query(`SELECT * FROM Customers WHERE name = "${req.query.customers}";`, (err, results) => {
-//         if (err){
-//             res.status(500).json({error: err});
-//         }
-//         res.status(200).json(results);
-//     });
-// })
-
 app.put('/addCustomer', (req, res) => {
 
     connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.name}", "${req.body.email}");`, (err, results) => {
@@ -57,15 +49,6 @@ app.put('/addCustomer', (req, res) => {
 
 });
 
-app.delete('/delete/:id/:table', (req, res) => {
-    connection.query(`DELETE FROM ${req.params.table} WHERE customer_id = ${req.params.id};`, (err) => {
-        if (err){
-            res.status(500).json({error: err});
-        }
-        res.status(200);
-    });
-})
-
 app.put('/editCustomer', (req, res) => {
     console.log(req.body);
     console.log(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE customer_id = '${req.body.id}';`)
@@ -77,5 +60,18 @@ app.put('/editCustomer', (req, res) => {
     })
     res.status(200);
 })
+
+
+
+app.delete('/delete/:id/:table', (req, res) => {
+    connection.query(`DELETE FROM ${req.params.table} WHERE customer_id = ${req.params.id};`, (err) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200);
+    });
+})
+
+
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
