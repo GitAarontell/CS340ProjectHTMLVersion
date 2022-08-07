@@ -2,11 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="styles.css">
+        <script src="deliveries.js" defer></script>
     <title>CS340 Group 70 </title>
   </head>
-    
+
   <body>
-    
+
     <div class="nav">
       <div class="entity-container">
         <div class="ec-title">
@@ -89,12 +90,12 @@
     <h1>Deliveries</h1>
     <!--valign (top, middle, bottom), align (left/center/right), height/wdith to td, colspan, rowspan-->
     <div class="deliveriesContainer">
-      <table align="center" border="1" width="1000" height="100" class="tableBody">
-        <thead>
+      <table align="center" border="1" width="1000" height="100" class="tableBodyDelivery">
+        <tbody>
           <tr align="center" class="headers">
             <th></th>
-            <th>Driver ID</th>
-            <th>Truck ID</th>
+            <th>Driver</th>
+            <th>Truck Plate</th>
             <th width="100">Starting Facility</th>
             <th width="100">Ending Facility</th>
             <th>Total Volume</th>
@@ -104,8 +105,8 @@
             <th>Expected Time</th>
             <th>Actual Time</th>
           </tr>
-        </thead>
-        <tr align="center" class="rows">
+        </tbody>
+        <!-- <tr align="center" class="rows">
           <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
           <td>1</td>
           <td>13</td>
@@ -143,7 +144,7 @@
           <td>4:01AM</td>
           <td>2:00PM</td>
           <td>4:00PM</td>
-        </tr>
+        </tr> -->
       </table>
     </div>
 
@@ -151,31 +152,32 @@
       <div class="formContainer">
         <h1>Add Delivery</h1>
         <form action="/">
-          <label for="DriverID">DriverID:</label><br>
-          <input type="number" id="dName" name="dName"><br>
-          <label for="TruckID">TruckID:</label><br>
-          <input type="number" id="dName" name="dName"><br>
+          <label for="Driverr">Driver:</label><br>
+          <select name="dName" id="iDriver">
+          </select>
+          <!-- <input id='iDriver' type="number" id="dName" name="dName"><br> -->
+          <label for="TruckID">Truck:</label><br>
+          <select name="dName" id="iPlate">
+          </select>
           <label for="start_facility_id">Start_Facility_ID:</label><br>
-          <input type="number"><br>
+          <select name="dName" id="iSf">
+          </select>
           <label for="end_facility_id">End_Facility_ID:</label><br>
-          <input type="number"><br>
-          <label for="total_volume">Total Volume:</label><br>
-          <input type="number"><br>
-          <label for="total_weight">Total Weight:</label><br>
-          <input type="number"><br>
+          <select name="dName" id="iEf">
+          </select>
           <label for="late">Late:</label><br>
-          <input type="number"><br>
+          <input id='iLate' type="number"><br>
           <label for="departure_time">Departure Time:</label><br>
-          <input type="number"><br>
+          <input id='iDt'type="number"><br>
           <label for="expected_arrival_time">Expected Arrival Time:</label><br>
-          <input type="number"><br>
+          <input id='iEat' type="number"><br>
           <label for="actual_arrival_time">Actual Arrival Time:</label><br>
-          <input type="number"><br>
-          <input type="submit" value="Add">
+          <input id='iAat' type="number"><br>
+          <input class='addEntity' type="submit" value="Add">
         </form>
       </div>
     </div>
-    
+
 
   </body>
 

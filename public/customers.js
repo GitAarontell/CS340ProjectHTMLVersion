@@ -170,7 +170,6 @@ fetch('/allCustomers', {method: 'GET'})
 
   // add all customer data rows
   newData.forEach(element => makeCustomerRow(element))
-
 });
 
 // add click event listener to customer table

@@ -69,8 +69,6 @@ CREATE OR REPLACE TABLE Deliveries (
   truck_id int NOT NULL,
   start_facility_id int NOT NULL,
   end_facility_id int NOT NULL,
-  total_volume int NOT NULL,
-  total_weight int NOT NULL,
 
   late tinyint(1),
   departure_time datetime,
