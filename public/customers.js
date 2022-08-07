@@ -14,77 +14,6 @@ const selectAllString = "All Customers";
 
 // used for edit button event listener
 check = false;
-/*
-class MakeRow {
-    constructor(name, email, id){
-        this.createNewRow(name, email, id);
-    }
-
-    createNewRow(name, email, id){
-        let tr = document.createElement('tr');
-        tr.setAttribute('align', 'center');
-        tr.setAttribute('height', '35');
-        tr.className = 'rows';
-
-        // create the table data elements
-        let td1 = document.createElement('td');
-        let td2 = document.createElement('td');
-        let td3 = document.createElement('td');
-
-        // set text content of table data to name and email
-        i1 = document.createElement('input');
-        i2 = document.createElement('input');
-
-        i1.value = name;
-        i2.value = email;
-
-        i1.setAttribute('readonly', 'readonly');
-        i2.setAttribute('readonly', 'readonly');
-        //td2.textContent = element.name;
-        //td3.textContent = element.email;
-        td2.appendChild(i1);
-        td3.appendChild(i2);
-
-        // set td1 attributes
-        td1.setAttribute('width', '100');
-        td1.setAttribute('height', '35');
-
-        // create the edit and delete buttons
-        editButton = document.createElement('input');
-        delButton = document.createElement('input');
-
-        // create edit and delete buttons
-        editButton.setAttribute('type', 'button');
-        editButton.setAttribute('value', 'Edit');
-        editButton.className = 'editButton';
-        editButton.id = id;
-
-        delButton.setAttribute('type', 'button');
-        delButton.setAttribute('value', 'Del');
-        delButton.className = 'delButton';
-        delButton.id = id;
-
-        // append the edit button and delete button to table data 1
-        td1.appendChild(editButton);
-        td1.appendChild(delButton);
-
-        // add as a child element all table data to table row
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-
-        // append the row to the table
-        table.appendChild(tr);
-
-        // adds options to the customer search
-        option = document.createElement('option');
-        option.textContent = element.name;
-        option.setAttribute('value', element.name);
-
-        selection.appendChild(option);
-    }
-}
-*/
 
 // makes a new row document element and appends it to the table given a single customer entity
 function makeCustomerRow(customer, addOption = true) {
@@ -154,7 +83,6 @@ function makeCustomerRow(customer, addOption = true) {
   }
 }
 
-// make a request to this url which is on the express server as a get request
 fetch('/allCustomers', {method: 'GET'})
 .then(data => {
     // get the data that was sent back and return it as json to next promise
@@ -162,14 +90,70 @@ fetch('/allCustomers', {method: 'GET'})
     return data.json();
 }).then(newData => {
 
-  // add general search option
-  option = document.createElement('option');
-  option.textContent = selectAllString;
-  option.setAttribute('value', selectAllString);
-  selection.appendChild(option);
+    //take the now json data and loop through it
+    newData.forEach(element => {
+        let tr = document.createElement('tr');
+        tr.setAttribute('align', 'center');
+        tr.setAttribute('height', '35');
+        tr.className = 'rows';
 
-  // add all customer data rows
-  newData.forEach(element => makeCustomerRow(element))
+        // create the table data elements
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+
+        // set text content of table data to name and email
+        i1 = document.createElement('input')
+        i2 = document.createElement('input')
+
+        i1.value = element.name;
+        i2.value = element.email;
+
+        i1.setAttribute('readonly', 'readonly')
+        i2.setAttribute('readonly', 'readonly')
+        //td2.textContent = element.name;
+        //td3.textContent = element.email;
+        td2.appendChild(i1);
+        td3.appendChild(i2);
+
+        // set td1 attributes
+        td1.setAttribute('width', '100');
+        td1.setAttribute('height', '35');
+        
+        // create the edit and delete buttons
+        editButton = document.createElement('input');
+        delButton = document.createElement('input');
+
+        // create edit and delete buttons
+        editButton.setAttribute('type', 'button');
+        editButton.setAttribute('value', 'Edit');
+        editButton.className = 'editButton';
+        editButton.id = element.customer_id;
+
+        delButton.setAttribute('type', 'button');
+        delButton.setAttribute('value', 'Del');
+        delButton.className = 'delButton';
+        delButton.id = element.customer_id;
+
+        // append the edit button and delete button to table data 1
+        td1.appendChild(editButton);
+        td1.appendChild(delButton);
+
+        // add as a child element all table data to table row
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+
+        // append the row to the table
+        table.appendChild(tr);
+
+        // adds options to the customer search
+        option = document.createElement('option');
+        option.textContent = element.name;
+        option.setAttribute('value', element.name);
+
+        selection.appendChild(option);
+    });
 });
 
 // add click event listener to customer table
