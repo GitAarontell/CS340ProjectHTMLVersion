@@ -13,7 +13,7 @@ CREATE OR REPLACE TABLE Customers (
   name varchar(45) NOT NULL,
   email varchar(45) NOT NULL,
 
-  PRIMARY KEY (customer_id)
+  PRIMARY KEY (id)
 );
 
 CREATE OR REPLACE TABLE Facilities (
@@ -22,8 +22,8 @@ CREATE OR REPLACE TABLE Facilities (
   location varchar(45) NOT NULL,
   name varchar(45) NOT NULL,
 
-  PRIMARY KEY (facility_id),
-  FOREIGN KEY (customer_id) REFERENCES Customers(customer_id) ON UPDATE CASCADE ON DELETE CASCADE
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES Customers(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE Trucks (
@@ -33,8 +33,8 @@ CREATE OR REPLACE TABLE Trucks (
   max_weight int NOT NULL,
   max_volume int NOT NULL,
 
-  PRIMARY KEY (truck_id),
-  FOREIGN KEY (current_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE
+  PRIMARY KEY (id),
+  FOREIGN KEY (current_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE Drivers (
@@ -44,7 +44,7 @@ CREATE OR REPLACE TABLE Drivers (
   late_deliveries int NOT NULL DEFAULT 0,
   early_deliveries int NOT NULL DEFAULT 0,
 
-  PRIMARY KEY (driver_id)
+  PRIMARY KEY (id)
 );
 
 CREATE OR REPLACE TABLE Orders (
@@ -56,11 +56,11 @@ CREATE OR REPLACE TABLE Orders (
   volume int NOT NULL,
   weight int NOT NULL,
 
-  PRIMARY KEY (order_id),
-  FOREIGN KEY (customer_id) REFERENCES Customers(customer_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (start_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (end_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (current_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE
+  PRIMARY KEY (id),
+  FOREIGN KEY (customer_id) REFERENCES Customers(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (start_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (end_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (current_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE Deliveries (
@@ -69,31 +69,32 @@ CREATE OR REPLACE TABLE Deliveries (
   truck_id int NOT NULL,
   start_facility_id int NOT NULL,
   end_facility_id int NOT NULL,
-
+  total_volume int NOT NULL,
+  total_weight int NOT NULL,
   late tinyint(1),
   departure_time datetime,
   expected_arrival_time datetime,
   actual_arrival_time datetime,
 
-  PRIMARY KEY (delivery_id),
-  FOREIGN KEY (driver_id) REFERENCES Drivers(driver_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (truck_id) REFERENCES Trucks(truck_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (start_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (end_facility_id) REFERENCES Facilities(facility_id) ON UPDATE CASCADE ON DELETE CASCADE
+  PRIMARY KEY (id),
+  FOREIGN KEY (driver_id) REFERENCES Drivers(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (truck_id) REFERENCES Trucks(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (start_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (end_facility_id) REFERENCES Facilities(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE DeliveryOrders (
   delivery_id int NOT NULL,
   order_id int NOT NULL,
-  FOREIGN KEY (delivery_id) REFERENCES Deliveries(delivery_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (delivery_id) REFERENCES Deliveries(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (order_id) REFERENCES Orders(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE TruckDrivers (
   driver_id int NOT NULL,
   truck_id int NOT NULL,
-  FOREIGN KEY (driver_id) REFERENCES Drivers(driver_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  FOREIGN KEY (truck_id) REFERENCES Trucks(truck_id) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (driver_id) REFERENCES Drivers(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (truck_id) REFERENCES Trucks(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -124,38 +125,38 @@ VALUES ("abc 123", 56000, 8262, NULL);
 
 -- TruckDrivers --
 INSERT INTO TruckDrivers (truck_id, driver_id)
-VALUES ((SELECT truck_id FROM Trucks WHERE plate="abc 123"),
-        (SELECT driver_id FROM Drivers WHERE name="Asher"));
+VALUES ((SELECT id FROM Trucks WHERE plate="abc 123"),
+        (SELECT id FROM Drivers WHERE name="Asher"));
 
 -- Create Orders --
 INSERT INTO Orders (customer_id, volume, weight, start_facility_id, end_facility_id, current_facility_id)
-VALUES ((SELECT customer_id FROM Customers WHERE name="Local Store Owner"), 400, 80,
-        (SELECT facility_id FROM Facilities WHERE name="Salem Warehouse"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Store"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Store"));
+VALUES ((SELECT id FROM Customers WHERE name="Local Store Owner"), 400, 80,
+        (SELECT id FROM Facilities WHERE name="Salem Warehouse"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Store"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Store"));
 
 INSERT INTO Orders (customer_id, volume, weight, start_facility_id, end_facility_id, current_facility_id)
-VALUES ((SELECT customer_id FROM Customers WHERE name="Local Store Owner"), 200, 220,
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Warehouse"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Store"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Store"));
+VALUES ((SELECT id FROM Customers WHERE name="Local Store Owner"), 200, 220,
+        (SELECT id FROM Facilities WHERE name="Corvallis Warehouse"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Store"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Store"));
 
 -- Create Deliveries --
 INSERT INTO Deliveries (departure_time, expected_arrival_time, actual_arrival_time, total_volume, total_weight,
                         truck_id, driver_id, start_facility_id, end_facility_id)
 VALUES ('2022-07-10 09:00:00', '2022-07-10 10:00:00', '2022-07-10 09:52:00', 80, 400,
-        (SELECT truck_id FROM Trucks WHERE plate="abc 123"),
-        (SELECT driver_id FROM Drivers WHERE name="Asher"),
-        (SELECT facility_id FROM Facilities WHERE name="Salem Warehouse"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Warehouse"));
+        (SELECT id FROM Trucks WHERE plate="abc 123"),
+        (SELECT id FROM Drivers WHERE name="Asher"),
+        (SELECT id FROM Facilities WHERE name="Salem Warehouse"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Warehouse"));
 
 INSERT INTO Deliveries (departure_time, expected_arrival_time, actual_arrival_time, total_volume, total_weight,
                         truck_id, driver_id, start_facility_id, end_facility_id)
 VALUES ('2022-07-11 13:00:00', '2022-07-10 13:25:00', '2022-07-11 03:47:00', 280, 620,
-        (SELECT truck_id FROM Trucks WHERE plate="abc 123"),
-        (SELECT driver_id FROM Drivers WHERE name="Asher"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Warehouse"),
-        (SELECT facility_id FROM Facilities WHERE name="Corvallis Store"));
+        (SELECT id FROM Trucks WHERE plate="abc 123"),
+        (SELECT id FROM Drivers WHERE name="Asher"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Warehouse"),
+        (SELECT id FROM Facilities WHERE name="Corvallis Store"));
 
 -- Delivery Orders --
 INSERT INTO DeliveryOrders (delivery_id, order_id)
