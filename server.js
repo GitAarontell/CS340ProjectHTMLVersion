@@ -95,6 +95,16 @@ app.put('/editCustomer', (req, res) => {
     res.status(200);
 })
 
+app.delete('/deleteCustomer/:id', (req, res) => {
+    connection.query(`DELETE FROM Customers WHERE customer_id = ${req.params.id};`, (err) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200);
+    });
+})
+
+
 // Manage Delivery Requests
 app.get('/allDeliveries', (req, res) => {
     // send query through the connection
@@ -119,14 +129,37 @@ app.put('/addDelivery', (req, res) => {
 });
 
 
-app.delete('/delete/:id/:table', (req, res) => {
-    connection.query(`DELETE FROM ${req.params.table} WHERE customer_id = ${req.params.id};`, (err) => {
+// Manage Driver requests
+app.get('/allDrivers', (req, res) => {
+    // send query through the connection
+    connection.query('SELECT * FROM Drivers;', (err, results) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200).json(results);
+    });
+});
+
+app.put('/addDriver', (req, res) => {
+
+    connection.query(`INSERT INTO Drivers (name, email, late_deliveries, early_deliveries) VALUES ("${req.body.name}", "${req.body.email}", "${req.body.ld}", "${req.body.ed}");`, (err, results) => {
+        if (err) {
+            res.status(500).json({error: err});
+        }
+        //console.log(results);
+        res.status(200).json({id: results});
+    });
+});
+
+app.delete('/deleteDriver/:id', (req, res) => {
+    connection.query(`DELETE FROM Drivers WHERE driver_id = ${req.params.id};`, (err) => {
         if (err){
             res.status(500).json({error: err});
         }
         res.status(200);
     });
 })
+
 
 
 

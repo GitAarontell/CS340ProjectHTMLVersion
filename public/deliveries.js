@@ -154,6 +154,7 @@ fetch('/truckPlates', {method: 'GET'})
 
 });
 
+// add facilities
 fetch('/facilityNames', {method: 'GET'})
 .then(data => {
     // get the data that was sent back and return it as json to next promise

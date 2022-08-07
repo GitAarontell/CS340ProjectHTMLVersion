@@ -176,7 +176,7 @@ fetch('/allCustomers', {method: 'GET'})
 table.addEventListener('click', (e) => {
     // if the class name of the clicked element within table is delButton
     if(e.target.className == "delButton"){
-        fetch(`/delete/${e.target.id}/Customers`, {method: 'DELETE'})
+        fetch(`/deleteCustomer/${e.target.id}`, {method: 'DELETE'})
         // then remove the current elements parents parent from the table, which is the table row, which is a child
         // element of the table, so removes that row from the table
         table.removeChild(e.target.parentElement.parentElement);
