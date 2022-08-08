@@ -36,7 +36,8 @@ CREATE OR REPLACE TABLE Drivers (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(45) NOT NULL,
   email varchar(45) NOT NULL,
-
+  late_deliveries int NOT NULL DEFAULT 0,
+  early_deliveries int NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );
 
