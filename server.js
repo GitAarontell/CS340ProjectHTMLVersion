@@ -222,7 +222,8 @@ app.put('/addDelivery', (req, res) => {
 app.get('/allDrivers', (req, res) => {
     // send query through the connection
 
-    connection.query('SELECT Drivers.id as id, Drivers.name as name, Drivers.email as email, COUNT(LD.id) as late_deliveries, COUNT(ED.id) as early_deliveries FROM Drivers JOIN Deliveries AS LD ON LD.driver_id = Drivers.id AND LD.late=1 JOIN Deliveries AS ED ON ED.driver_id = Drivers.id AND ED.late=0;', (err, results) => {
+    connection.query('SELECT id, name, email, COUNT(LD.id) as late_deliveries, COUNT(ED.id) as early_deliveries FROM Drivers JOIN Deliveries AS LD ON LD.driver_id = Drivers.id AND LD.late=1 JOIN Deliveries AS ED ON ED.driver_id = Drivers.id AND ED.late=0;', (err, results) => {
+
         if (err){
             res.status(500).json({error: err});
         }
