@@ -158,8 +158,8 @@ addButton.addEventListener('click', (e) => {
     // if the class name of the clicked element within table is delButton
     let name = document.getElementById('iName').value;
     let email = document.getElementById('iEmail').value;
-    let ld = document.getElementById('iLd').value;
-    let ed = document.getElementById('iEd').value;
+    let ld = 0;
+    let ed = 0;
 
     if (name != "" && email != "") {
       fetch('/addDriver',
@@ -168,9 +168,7 @@ addButton.addEventListener('click', (e) => {
           body: JSON.stringify(
               {
                   'name': name,
-                  'email': email,
-                  'ld': ld,
-                  'ed': ed
+                  'email': email
               }),
           headers: {
               'Content-Type': 'application/json',

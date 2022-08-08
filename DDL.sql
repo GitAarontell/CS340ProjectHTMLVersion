@@ -120,7 +120,7 @@ VALUES ("HA3421LP", 5000, 3500, 1),
 -- TruckDrivers --
 INSERT INTO TruckDrivers (truck_id, driver_id)
 VALUES (
-  (SELECT id FROM Trucks WHERE plate="HA3421LP"),  
+  (SELECT id FROM Trucks WHERE plate="HA3421LP"),
   (SELECT id FROM Drivers WHERE name="Asher"));
 
 -- Create Orders --
