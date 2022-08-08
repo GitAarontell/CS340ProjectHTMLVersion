@@ -159,7 +159,9 @@ table.addEventListener('click', (e) => {
         tw = tv.parentElement.nextElementSibling.childNodes[0];
         late = tv.parentElement.nextElementSibling.childNodes[0];
         dt = late.parentElement.nextElementSibling.childNodes[0];
-        
+        et = dt.parentElement.nextElementSibling.childNodes[0];
+        at = et.parentElement.nextElementSibling.childNodes[0];
+
         console.log(idOfRow)
         console.log(driver)
         console.log(plate)
