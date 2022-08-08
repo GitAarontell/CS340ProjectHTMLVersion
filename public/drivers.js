@@ -52,12 +52,12 @@ function makeDriverRow(driver, addOption = true) {
   editButton.setAttribute('type', 'button');
   editButton.setAttribute('value', 'Edit');
   editButton.className = 'editButton';
-  editButton.id = driver.driver_id;
+  editButton.id = driver.id;
 
   delButton.setAttribute('type', 'button');
   delButton.setAttribute('value', 'Del');
   delButton.className = 'delButton';
-  delButton.id = driver.driver_id;
+  delButton.id = driver.id;
 
   // append the edit button and delete button to table data 1
   td1.appendChild(editButton);
