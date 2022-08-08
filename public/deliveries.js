@@ -154,6 +154,7 @@ table.addEventListener('click', (e) => {
         driver = idOfRow.parentElement.nextElementSibling.childNodes[0];
         plate = driver.parentElement.nextElementSibling.childNodes[0];
         sf = plate.parentElement.nextElementSibling.childNodes[0];
+        ef = sf.parentElement.nextElementSibling.childNodes[0];
         console.log(idOfRow)
         console.log(driver)
         console.log(plate)
