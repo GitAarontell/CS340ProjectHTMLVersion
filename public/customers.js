@@ -53,12 +53,12 @@ function makeCustomerRow(customer, addOption = true) {
   editButton.setAttribute('type', 'button');
   editButton.setAttribute('value', 'Edit');
   editButton.className = 'editButton';
-  editButton.id = customer.customer_id;
+  editButton.id = customer.id;
 
   delButton.setAttribute('type', 'button');
   delButton.setAttribute('value', 'Del');
   delButton.className = 'delButton';
-  delButton.id = customer.customer_id;
+  delButton.id = customer.id;
 
   // append the edit button and delete button to table data 1
   td1.appendChild(editButton);
@@ -83,7 +83,7 @@ function makeCustomerRow(customer, addOption = true) {
   }
 }
 
-fetch('/allCustomers', {method: 'GET'})
+fetch('/getAll/Customers', {method: 'GET'})
 .then(data => {
     // get the data that was sent back and return it as json to next promise
     // will send a json object of current customers
@@ -128,12 +128,12 @@ fetch('/allCustomers', {method: 'GET'})
         editButton.setAttribute('type', 'button');
         editButton.setAttribute('value', 'Edit');
         editButton.className = 'editButton';
-        editButton.id = element.customer_id;
+        editButton.id = element.id;
 
         delButton.setAttribute('type', 'button');
         delButton.setAttribute('value', 'Del');
         delButton.className = 'delButton';
-        delButton.id = element.customer_id;
+        delButton.id = element.id;
 
         // append the edit button and delete button to table data 1
         td1.appendChild(editButton);
@@ -182,14 +182,14 @@ table.addEventListener('click', (e) => {
             usrName.setAttribute('readOnly', 'readonly');
             email.setAttribute('readOnly', 'readonly');
 
-            fetch('/editCustomer',
+            fetch('/edit/Customer',
             {
                 method: 'PUT',
                 body: JSON.stringify(
                 {
+                    'table': 'Customers',
                     'name': usrName.value,
                     'email': email.value,
-                    'table': 'Customers',
                     'id': e.target.id,
                 }),
                 headers: {
@@ -211,7 +211,7 @@ addButton.addEventListener('click', (e) => {
     if (name != "" && email != "") {
       fetch('/addCustomer',
       {
-          method: 'PUT',
+          method: 'POST',
           body: JSON.stringify(
               {
                   'name': name,

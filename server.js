@@ -48,16 +48,106 @@ app.get('/facilityNames', (req,res) => {
   });
 });
 
-// Manage Customer Requests
-app.get('/allCustomers', (req, res) => {
+// Universal queries #########################################################
+app.get('/getAll/:table', (req, res) => {
     // send query through the connection
-    connection.query('SELECT customer_id, name, email FROM Customers;', (err, results) => {
+    console.log(`SELECT * FROM ${req.params.table};`)
+    connection.query(`SELECT * FROM ${req.params.table};`, (err, results) => {
         if (err){
             res.status(500).json({error: err});
         }
         res.status(200).json(results);
     });
+})
+
+app.get('/search/:table/:id', (req, res) => {
+    connection.query(`SELECT * FROM ${req.params.table} WHERE id = "${req.params.id}";`, (err, results) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200).json(results);
+    });
+  })
+
+app.delete('/delete/:table/:id', (req, res) => {
+    connection.query(`DELETE FROM ${req.params.table} WHERE id = ${req.params.id};`, (err) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200);
+    });
+})
+
+// processes data of any size attributes and turns into appropriate string
+// can only be used with single entities and used for the universal edit
+// for this to work properly the table has to be the first key and the id must be the last key
+// in the json object
+function processEditData(bodyObj) {
+    string = ``
+    count = 0
+    for (prop in bodyObj){
+        count += 1
+        if (prop == 'table'){
+            string += "UPDATE " + bodyObj[prop] + " SET "
+        }
+        else if (count == Object.keys(bodyObj).length - 1){
+            string +=  prop + ' = ' + "'" + bodyObj[prop] + "' "
+        }
+        else if (prop == 'id'){
+            string += 'WHERE id = ' + "'" + bodyObj[prop] + "';"
+        }
+        else{
+            string +=  prop + ' = ' + "'" + bodyObj[prop] + "', "
+        }
+    }
+    return string
+}
+
+app.put('/edit/:table', (req, res) => {
+    // console.log(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE id = '${req.body.id}';`)
+    connection.query(processEditData(req.body), (err) => {
+        if (err) {
+            res.status(500).json({error: err});
+        }
+
+    })
+    res.status(200);
+})
+
+function processPostData(bodyObj) {
+    string = ``
+    string2 = ``
+    count = 0
+    for (prop in bodyObj){
+        count += 1
+        if (prop == 'table'){
+            string += "INSERT INTO " + bodyObj[prop] + "("
+        }
+        else if (count == Object.keys(bodyObj).length){
+            string += prop + ') VALUES('
+            string2 += `"${bodyObj[prop]}");`
+        }
+        else{
+            string += prop + ', '
+            string2 += `"${bodyObj[prop]}", `
+        }
+    }
+    string += string2
+    return string
+}
+
+app.post('/add/:table', (req, res) => {
+    console.log(processPostData(req.body))
+    connection.query(processPostData(req.body), (err, results) => {
+        if (err) {
+            res.status(500).json({error: err});
+        }
+        console.log(results);
+        console.log(results.OkPacket);
+        res.status(200).json({id: results});
+    });
 });
+// Universal queries #########################################################
 
 app.get('/customerByName/:name', (req,res) => {
   var name = req.params.name;
@@ -69,7 +159,7 @@ app.get('/customerByName/:name', (req,res) => {
   });
 });
 
-app.put('/addCustomer', (req, res) => {
+app.post('/addCustomer', (req, res) => {
 
     connection.query(`INSERT INTO Customers(name, email) VALUES("${req.body.name}", "${req.body.email}");`, (err, results) => {
         if (err) {
@@ -79,8 +169,6 @@ app.put('/addCustomer', (req, res) => {
         console.log(results.OkPacket);
         res.status(200).json({id: results});
     });
-
-
 });
 
 app.put('/editCustomer', (req, res) => {
@@ -96,13 +184,14 @@ app.put('/editCustomer', (req, res) => {
 })
 
 app.delete('/deleteCustomer/:id', (req, res) => {
-    connection.query(`DELETE FROM Customers WHERE customer_id = ${req.params.id};`, (err) => {
+    connection.query(`DELETE FROM Customers WHERE id = ${req.params.id};`, (err) => {
         if (err){
             res.status(500).json({error: err});
         }
         res.status(200);
     });
 })
+
 
 
 // Manage Delivery Requests
@@ -159,8 +248,6 @@ app.delete('/deleteDriver/:id', (req, res) => {
         res.status(200);
     });
 })
-
-
 
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
