@@ -36,8 +36,6 @@ CREATE OR REPLACE TABLE Drivers (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(45) NOT NULL,
   email varchar(45) NOT NULL,
-  late_deliveries int NOT NULL DEFAULT 0,
-  early_deliveries int NOT NULL DEFAULT 0,
 
   PRIMARY KEY (id)
 );
@@ -121,7 +119,7 @@ VALUES ("HA3421LP", 5000, 3500, 1),
 -- TruckDrivers --
 INSERT INTO TruckDrivers (truck_id, driver_id)
 VALUES (
-  (SELECT id FROM Trucks WHERE plate="HA3421LP"),  
+  (SELECT id FROM Trucks WHERE plate="HA3421LP"),
   (SELECT id FROM Drivers WHERE name="Asher"));
 
 -- Create Orders --

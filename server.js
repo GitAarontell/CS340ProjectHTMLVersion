@@ -221,7 +221,7 @@ app.put('/addDelivery', (req, res) => {
 // Manage Driver requests
 app.get('/allDrivers', (req, res) => {
     // send query through the connection
-    connection.query('SELECT * FROM Drivers;', (err, results) => {
+    connection.query('SELECT Drivers.id, Drivers.name, Drivers.email, COUNT(case Deliveries.late=1 then 1 else null end) as late_deliveries, COUNT(case Deliveries.late=0 then 1 else null end) as early_deliveries FROM Drivers JOIN Deliveries ON Delivery.driver_id = Driver.id;', (err, results) => {
         if (err){
             res.status(500).json({error: err});
         }
@@ -231,7 +231,7 @@ app.get('/allDrivers', (req, res) => {
 
 app.put('/addDriver', (req, res) => {
 
-    connection.query(`INSERT INTO Drivers (name, email, late_deliveries, early_deliveries) VALUES ("${req.body.name}", "${req.body.email}", "${req.body.ld}", "${req.body.ed}");`, (err, results) => {
+    connection.query(`INSERT INTO Drivers (name, email) VALUES ("${req.body.name}", "${req.body.email}");`, (err, results) => {
         if (err) {
             res.status(500).json({error: err});
         }
