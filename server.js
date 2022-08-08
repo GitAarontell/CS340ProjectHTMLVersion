@@ -197,7 +197,7 @@ app.delete('/deleteCustomer/:id', (req, res) => {
 // Manage Delivery Requests
 app.get('/allDeliveries', (req, res) => {
     // send query through the connection
-    connection.query('SELECT Drivers.name as driver, Trucks.plate as plate, SUM(Orders.volume) as totVol, SUM(Orders.weight) as totWgt, F1.name as sf, F2.name as ef, Deliveries.late as late, Deliveries.expected_arrival_time as eat, Deliveries.departure_time as dt, Deliveries.actual_arrival_time as aat FROM Deliveries JOIN Drivers ON Drivers.driver_id = Deliveries.driver_id JOIN Trucks ON Trucks.truck_id = Deliveries.truck_id JOIN Facilities AS F1 ON F1.facility_id = Deliveries.start_facility_id JOIN Facilities AS F2 ON F2.facility_id = Deliveries.end_facility_id JOIN DeliveryOrders ON DeliveryOrders.delivery_id = Deliveries.delivery_id JOIN Orders ON DeliveryOrders.order_id = Orders.order_id;', (err, results) => {
+    connection.query("SELECT Deliveries.id, Drivers.name, Trucks.plate, F1.location as start_facility, F2.location as end_facility, Deliveries.total_volume, Deliveries.total_weight, Deliveries.late, Deliveries.departure_time, Deliveries.expected_arrival_time, Deliveries.actual_arrival_time FROM Deliveries JOIN Drivers ON Drivers.id = Deliveries.driver_id JOIN Facilities as F1 ON F1.id = Deliveries.start_facility_id JOIN Facilities as F2 ON F2.id = Deliveries.end_facility_id JOIN Trucks ON Trucks.id = Deliveries.truck_id GROUP BY Deliveries.id;", (err, results) => {
         if (err){
             res.status(500).json({error: err});
         }
@@ -251,3 +251,15 @@ app.delete('/deleteDriver/:id', (req, res) => {
 
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
+
+let q = "SELECT Drivers.name as driver, Trucks.plate as plate, SUM(Orders.volume) as total_volume, SUM(Orders.weight) as total_weight, F1.name as start_facility, F2.name as end_facility, Deliveries.late as late_deliveries, Deliveries.expected_arrival_time as estimated_arrival_time, Deliveries.departure_time as departure_time, Deliveries.actual_arrival_time as actual_arrival_time FROM Deliveries JOIN Drivers ON Drivers.id = Deliveries.driver_id JOIN Trucks ON Trucks.id = Deliveries.truck_id JOIN Facilities AS F1 ON F1.id = Deliveries.start_facility_id JOIN Facilities AS F2 ON F2.id = Deliveries.end_facility_id JOIN DeliveryOrders ON DeliveryOrders.delivery_id = Deliveries.id JOIN Orders ON DeliveryOrders.order_id = Orders.id;"
+
+/*
+"SELECT Drivers.name as driver, Trucks.plate as plate, SUM(Orders.volume) as total_volume, SUM(Orders.weight) as total_weight, F1.name as start_facility, F2.name as end_facility, Deliveries.late as late_deliveries, Deliveries.expected_arrival_time as estimated_arrival_time, Deliveries.departure_time as departure_time, Deliveries.actual_arrival_time as actual_arrival_time FROM Deliveries
+JOIN Drivers ON Drivers.id = Deliveries.driver_id
+JOIN Trucks ON Trucks.id = Deliveries.truck_id
+JOIN Facilities AS F1 ON F1.id = Deliveries.start_facility_id
+JOIN Facilities AS F2 ON F2.id = Deliveries.end_facility_id
+JOIN DeliveryOrders ON DeliveryOrders.delivery_id = Deliveries.id
+JOIN Orders ON DeliveryOrders.order_id = Orders.id;"
+*/
