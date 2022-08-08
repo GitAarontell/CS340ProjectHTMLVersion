@@ -150,38 +150,42 @@ table.addEventListener('click', (e) => {
     }
     else if(e.target.className == 'editButton'){
     
-        locationName = e.target.parentElement.nextElementSibling.childNodes[0];
-        city = locationName.parentElement.nextElementSibling.childNodes[0];
+        idOfRow = e.target.parentElement.nextElementSibling.childNodes[0];
+        driver = idOfRow.parentElement.nextElementSibling.childNodes[0];
+        plate = driver.parentElement.nextElementSibling.childNodes[0];
+        sf = plate.parentElement.nextElementSibling.childNodes[0];
+        console.log(idOfRow)
+        console.log(driver)
+        console.log(plate)
+        // if (check == false){
+        //     e.target.setAttribute('value', 'Update');
+        //     check = true;
+        //     locationName.removeAttribute('readOnly');
+        //     city.removeAttribute('readOnly');
+        // } else {
+        //     e.target.setAttribute('value', 'Edit');
+        //     check = false;
 
-        if (check == false){
-            e.target.setAttribute('value', 'Update');
-            check = true;
-            locationName.removeAttribute('readOnly');
-            city.removeAttribute('readOnly');
-        } else {
-            e.target.setAttribute('value', 'Edit');
-            check = false;
+        //     locationName.setAttribute('readOnly', 'readonly');
+        //     city.setAttribute('readOnly', 'readonly');
 
-            locationName.setAttribute('readOnly', 'readonly');
-            city.setAttribute('readOnly', 'readonly');
-
-            // fetch('/edit/Facilities',
-            // {
-            //     method: 'PUT',
-            //     body: JSON.stringify(
-            //     {
-            //         'table': 'Facilities',
-            //         'name': locationName.value,
-            //         'location': city.value,
-            //         'id': e.target.id,
-            //     }),
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // }).catch(err => {
-            //     console.log(err);
-            // });
-        }
+        //     fetch('/edit/Facilities',
+        //     {
+        //         method: 'PUT',
+        //         body: JSON.stringify(
+        //         {
+        //             'table': 'Facilities',
+        //             'name': locationName.value,
+        //             'location': city.value,
+        //             'id': e.target.id,
+        //         }),
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //     }).catch(err => {
+        //         console.log(err);
+        //     });
+        // }
     }
 });
 
