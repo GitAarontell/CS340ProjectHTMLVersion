@@ -83,55 +83,53 @@
 
     <div class="driversContainer">
       <table border="1" width="1000" height="100" class="tableBodyDriver">
-        <tbody>
+        <thead>
+
           <tr align="center" class="headers">
-            <th></th>
             <th>Name</th>
             <th>Email</th>
             <th>Late Deliveries</th>
             <th>Early Deliveries</th>
           </tr>
+
+        </thead>
+        <tbody>
         </tbody>
-        <!-- <tr align="center" class="rows">
-          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-          <td>Jay Phillips</td>
-          <td>jay@gmail.com</td>
-          <td>3</td>
-          <td>14</td>
-        </tr>
-        <tr align="center" class="rows">
-          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-          <td>Arnold Reinhold</td>
-          <td>arnold@gmail.com</td>
-          <td>5</td>
-          <td>2</td>
-        </tr>
-        <tr align="center" class="rows">
-          <td width="100" height="35"> <input type="button" value="Edit"/> <input type="button" value="Del"/></td>
-          <td>Max Evans</td>
-          <td>evans@gmail.com</td>
-          <td>54</td>
-          <td>109</td>
-        </tr> -->
       </table>
     </div>
-
     <div class="eventContainer">
+
+      <div class="eventContainer">
+        <div class="formContainer">
+          <h1>Add Driver</h1>
+          <form action="/addEntity" method="POST">
+            <label for="name">Name:</label><br>
+            <input id='iName' type="text"><br>
+            <label for="email">Email:</label><br>
+            <input id='iEmail'type="text"><br>
+
+            <label for="late_deliveries">Late Deliveries:</label><br>
+            <input id='late_deliveries' type="number"><br>
+
+            <label for="early_deliveries">Early Deliveries:</label><br>
+            <input id='early_deliveries' type="number"><br>
+
+            <input class='addEntity' type="submit" value="Add">
+          </form>
+        </div>
+      </div>
+
       <div class="formContainer">
-        <h1>Add Driver</h1>
-        <form action="/addEntity" method="POST">
-          <label for="name">Name:</label><br>
-          <input id='iName' type="text"><br>
-          <label for="email">Email:</label><br>
-          <input id='iEmail'type="text"><br>
-          <!-- <label for="late_deliveries">Late Deliveries:</label><br>
-          <input id='iLd' type="number"><br>
-          <label for="early_deliveries">Early Deliveries:</label><br>
-          <input id='iEd' type="number"><br> -->
-          <input class='addEntity' type="submit" value="Add">
+        <h1>Search Drivers</h1>
+        <form action="/facilityData" method="GET">
+          <label for="dname">Name:</label><br>
+          <select name="customers" id="selections">
+          </select>
+          <input type="submit" value="Search" id="searchSubmit">
         </form>
       </div>
-    </div>
+
+  </div>
 
   </body>
 

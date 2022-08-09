@@ -410,11 +410,12 @@ searchButton.addEventListener('click', (e) => {
     id = '';
 
     let name = selection.value;
-
+    console.log(name)
     // remove all entries in the table
     choices = Array.from(selection.children);
     
     count = 0;
+    // delete whole table
     for(obj in choices) {
         if (choices[obj].value == name){
             id = choices[obj].id;
@@ -428,12 +429,13 @@ searchButton.addEventListener('click', (e) => {
     }
     
     // add new entries
-    fetch(`/search/Deliveries/${id}`, {method: 'GET',})
+    fetch(`/search/select/Deliveries/${id}`, {method: 'GET',})
     .then(data => {
         // get the data that was sent back and return it as json to next promise
         // will send a json object of current customers
         return data.json();
     }).then(newData => { 
+        console.log(newData)
         newData.forEach(element => makeCustomerRow(element));
     });
   });

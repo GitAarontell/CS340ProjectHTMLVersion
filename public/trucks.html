@@ -101,14 +101,18 @@
         <h1>Add Truck</h1>
         <form action="/">
           <label for="current_facility_id">Current Facility ID:</label><br>
-          <input type="number" id="current_facility_id" name="current_facility_id"><br>
+          <select type="number" id="current_facility_id" name="current_facility_id"></select><br>
+
           <label for="plate">Plate:</label><br>
-          <input type="text"><br>
+          <input name="plate" type="text"><br>
+
           <label for="total_volume">Volume:</label><br>
           <input type="number"><br>
+
           <label for="total_weight">Weight:</label><br>
           <input type="number"><br>
-          <input type="submit" value="Add">
+
+          <input type="submit" class='addEntity' value="Add">
         </form>
       </div>
 
