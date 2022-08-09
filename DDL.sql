@@ -65,7 +65,7 @@ CREATE OR REPLACE TABLE Deliveries (
   end_facility_id int NOT NULL,
   total_volume int NOT NULL,
   total_weight int NOT NULL,
-  late tinyint(1),
+  late int,
   departure_time datetime,
   expected_arrival_time datetime,
   actual_arrival_time datetime,

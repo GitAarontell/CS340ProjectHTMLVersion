@@ -69,6 +69,15 @@ app.get('/search/:table/:id', (req, res) => {
     });
   })
 
+app.get('/getIDS/:table/:name', (req, res) => {
+    connection.query(`SELECT id, ${req.params.name} FROM ${req.params.table};`, (err, results) => {
+        if (err){
+            res.status(500).json({error: err});
+        }
+        res.status(200).json(results);
+    });
+})
+
 app.delete('/delete/:table/:id', (req, res) => {
     connection.query(`DELETE FROM ${req.params.table} WHERE id = ${req.params.id};`, (err) => {
         if (err){
@@ -142,8 +151,6 @@ app.post('/add/:table', (req, res) => {
         if (err) {
             res.status(500).json({error: err});
         }
-        console.log(results);
-        console.log(results.OkPacket);
         res.status(200).json({id: results});
     });
 });
@@ -171,18 +178,6 @@ app.post('/addCustomer', (req, res) => {
     });
 });
 
-app.put('/editCustomer', (req, res) => {
-    console.log(req.body);
-    console.log(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE customer_id = '${req.body.id}';`)
-    connection.query(`UPDATE ${req.body.table} SET name = '${req.body.name}', email = '${req.body.email}' WHERE customer_id = '${req.body.id}';`, (err) => {
-        if (err) {
-            res.status(500).json({error: err});
-        }
-
-    })
-    res.status(200);
-})
-
 app.delete('/deleteCustomer/:id', (req, res) => {
     connection.query(`DELETE FROM Customers WHERE id = ${req.params.id};`, (err) => {
         if (err){
@@ -201,19 +196,55 @@ app.get('/allDeliveries', (req, res) => {
         if (err){
             res.status(500).json({error: err});
         }
-        console.log(results);
         res.status(200).json(results);
     });
 });
 
-app.put('/addDelivery', (req, res) => {
+function deliverAddObjProcess(obj) {
+    temp = {}
+    for (item in obj) {
+        if (obj[item].length != ''){
+            temp[item] = obj[item]
+            
+        }
+    }
+    console.log(temp)
+    return temp
+}
 
-    connection.query(`INSERT INTO Deliveries (departure_time, expected_arrival_time, actual_arrival_time, total_volume, total_weight, truck_id, driver_id, start_facility_id, end_facility_id) VALUES ("${req.body.dt}", "${req.body.eat}", "${req.body.aat}", "${req.body.totVol}", "${req.body.totWgt}", SELECT truck_id FROM Trucks WHERE plate="${req.body.plate}" LIMIT 1, SELECT driver_id FROM Drivers WHERE name="${req.body.name}" LIMIT 1, SELECT facility_id FROM Facilities WHERE name="${req.body.name}" LIMIT 1, SELECT facility_id FROM Facilites WHERE name="${req.body.ef}" LIMIT 1);`, (err, results) => {
+function deliverAddProcess(obj) {
+    //'2022-07-10 09:00:00'
+    string1 = 'INSERT INTO '
+    string2 = ''
+    count = 0
+    console.log(Object.keys(obj).length)
+    for (item in obj){
+        if (count == 0) {
+            string1 += obj[item] + '('
+        }
+        else if(count == Object.keys(obj).length - 1){
+            string1 += item + ') VALUES ('
+            console.log(string2)
+            string2 += "'" + obj[item] + "');"
+        }
+        else if (obj[item].length != ''){
+            string1 += item + ', '
+            string2 += "'" + obj[item] + "', "
+            //console.log(string2)
+        }
+        count += 1
+    }
+    string1 += string2
+    return string1
+}
+
+app.post('/addDelivery', (req, res) => {
+    connection.query(deliverAddProcess(deliverAddObjProcess(req.body)), (err, results) => {
         if (err) {
             res.status(500).json({error: err});
         }
         //console.log(results);
-        res.status(200)//.json(0);
+        res.status(200).json({id: results});
     });
 });
 

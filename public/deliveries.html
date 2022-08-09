@@ -91,7 +91,7 @@
             <th>Truck Plate</th>
             <th>Starting Facility</th>
             <th>Ending Facility</th>
-            <th width="50">Total Volume</th>
+            <th>Total Volume</th>
             <th>Total Weight</th>
             <th>Late (Min)</th>
             <th>Departure Time</th>
@@ -109,27 +109,43 @@
       <div class="formContainer">
         <h1>Add Delivery</h1>
         <form action="/">
-          <label for="Driverr">Driver:</label><br>
-          <select name="dName" id="iDriver">
-          </select>
-          <!-- <input id='iDriver' type="number" id="dName" name="dName"><br> -->
-          <label for="TruckID">Truck:</label><br>
-          <select name="dName" id="iPlate">
-          </select>
-          <label for="start_facility_id">Start_Facility_ID:</label><br>
-          <select name="dName" id="iSf">
-          </select>
-          <label for="end_facility_id">End_Facility_ID:</label><br>
-          <select name="dName" id="iEf">
-          </select>
-          <label for="late">Late:</label><br>
+          <label for="driver">Driver:</label><br>
+          <select id="driver_sel" name="driver">
+          </select><br>
+
+          <label for="plate">Truck:</label><br>
+          <select id='truck' name="plate">
+          </select><br>
+
+          <label for="start_facility">Start_Facility:</label><br>
+          <select id='sf_selection' name="start_facility">
+          </select><br>
+
+          <label for="end_facility">End_Facility:</label><br>
+          <select id='ef_selection' name="end_facility">
+          </select><br>
+
+          <label for="weight">Weight:</label><br>
+          <input type='number' id='weight' name="weight">
+          </input><br>
+
+          <label for="volume">Volume:</label><br>
+          <input type='number' id='volume' name="volume">
+          </input><br>
+
+
+          <label for="late">Late (MIN):</label><br>
           <input id='iLate' type="number"><br>
+
           <label for="departure_time">Departure Time:</label><br>
-          <input id='iDt'type="number"><br>
-          <label for="expected_arrival_time">Expected Arrival Time:</label><br>
-          <input id='iEat' type="number"><br>
-          <label for="actual_arrival_time">Actual Arrival Time:</label><br>
-          <input id='iAat' type="number"><br>
+          <input type="datetime-local"><br>
+
+          <label for="expected_arrival">Expected Arrival Time:</label><br>
+          <input type="datetime-local"><br>
+
+          <label for="actual_arrival">Actual Arrival Time:</label><br>
+          <input name="actual_arrival" type="datetime-local"><br>
+
           <input class='addEntity' type="submit" value="Add">
         </form>
       </div>
